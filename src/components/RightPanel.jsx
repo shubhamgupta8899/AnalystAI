@@ -30,20 +30,20 @@ import {
 const RightPanel = ({ analysis, onReset, onQuickStart, userMode = 'general' }) => {
   if (!analysis) {
     return (
-      <div className="flex flex-1 flex-col bg-gradient-to-br from-slate-50 via-blue-50/20 to-purple-50/10 dark:from-gray-900 dark:via-blue-900/10 dark:to-purple-900/5 overflow-hidden">
+      <div className="flex flex-1 flex-col  from-slate-50 via-blue-50/20 to-purple-50/10 dark:from-gray-900 dark:via-blue-900/10 dark:to-purple-900/5 overflow-hidden">
         <EnhancedEmptyState onQuickStart={onQuickStart} userMode={userMode} />
       </div>
     );
   }
 
   return (
-    <div className="flex flex-1 flex-col bg-gradient-to-br from-gray-50 to-blue-50/30 dark:from-gray-900 dark:to-blue-900/20 overflow-hidden">
+    <div className="flex flex-1 flex-col  from-gray-50 to-blue-50/30 dark:from-gray-900 dark:to-blue-900/20 overflow-hidden">
       <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 animate-in fade-in slide-in-from-right-4 duration-500">
         {/* Header Section */}
         <div className="mb-8">
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6">
             <div className="flex items-start gap-4">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg border border-blue-200 dark:border-blue-800 font-bold text-2xl text-white">
+              <div className="w-16 h-16  from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg border border-blue-200 dark:border-blue-800 font-bold text-2xl text-white">
                 {analysis.ticker?.[0] || analysis.companyName?.[0] || "C"}
               </div>
               <div className="flex-1 min-w-0">
@@ -337,7 +337,7 @@ const RightPanel = ({ analysis, onReset, onQuickStart, userMode = 'general' }) =
           <div className="xl:col-span-1">
             <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-shadow">
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-                <div className="w-5 h-5 bg-gradient-to-r from-blue-500 to-purple-600 rounded flex items-center justify-center">
+                <div className="w-5 h-5 from-blue-500 to-purple-600 rounded flex items-center justify-center">
                   <span className="text-white text-xs font-bold">
                     {userMode === 'job-seeker' ? 'J' : userMode === 'investor' ? 'I' : 'S'}
                   </span>
@@ -519,7 +519,7 @@ const EnhancedEmptyState = ({ onQuickStart, userMode = 'general' }) => {
         {/* Hero Section */}
         <div className="text-center mb-12 lg:mb-16">
           <div className="relative inline-block mb-6">
-            <div className="w-24 h-24 lg:w-32 lg:h-32 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-2xl mb-4 mx-auto">
+            <div className="w-24 h-24 lg:w-32 lg:h-32 from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-2xl mb-4 mx-auto">
               {userMode === 'job-seeker' ? (
                 <Briefcase className="w-12 h-12 lg:w-16 lg:h-16 text-white" />
               ) : userMode === 'investor' ? (
@@ -533,7 +533,7 @@ const EnhancedEmptyState = ({ onQuickStart, userMode = 'general' }) => {
             </div>
           </div>
           
-          <h1 className="text-4xl lg:text-6xl font-bold bg-gradient-to-br from-gray-900 to-blue-600 dark:from-white dark:to-blue-400 bg-clip-text text-transparent mb-4">
+          <h1 className="text-4xl lg:text-6xl font-bold from-gray-900 to-blue-600 dark:from-white dark:to-blue-400 bg-clip-text text-transparent mb-4">
             {modeTitles[userMode]}
           </h1>
           <p className="text-xl lg:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
@@ -555,7 +555,7 @@ const EnhancedEmptyState = ({ onQuickStart, userMode = 'general' }) => {
                 className="group cursor-pointer bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-2xl transition-all duration-300 hover:scale-105"
                 onClick={() => onQuickStart && onQuickStart(action.title)}
               >
-                <div className={`w-12 h-12 bg-gradient-to-br ${action.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                <div className={`w-12 h-12  ${action.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
                   <action.icon className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
@@ -591,7 +591,7 @@ const EnhancedEmptyState = ({ onQuickStart, userMode = 'general' }) => {
                 className="group cursor-pointer bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700 p-4 shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-105"
                 onClick={() => onQuickStart && onQuickStart(company.name)}
               >
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-10 h-10 from-blue-400 to-purple-500 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
                   <span className="text-white font-bold text-sm">
                     {company.name[0]}
                   </span>
@@ -613,7 +613,7 @@ const EnhancedEmptyState = ({ onQuickStart, userMode = 'general' }) => {
         </div>
 
         {/* Features Grid */}
-        <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-3xl p-8 lg:p-12">
+        <div className=" from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-3xl p-8 lg:p-12">
           <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white text-center mb-8 lg:mb-12">
             {userMode === 'job-seeker' ? 'Why Use Our Career Analyst?' :
              userMode === 'investor' ? 'Why Use Our Investment Analyst?' :
@@ -672,7 +672,7 @@ const EnhancedEmptyState = ({ onQuickStart, userMode = 'general' }) => {
                   userMode === 'investor' ? "Financial Performance" :
                   "Financial Analysis"
                 )}
-                className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center gap-3"
+                className="px-8 py-4 from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center gap-3"
               >
                 <Zap className="w-5 h-5" />
                 {userMode === 'job-seeker' ? "Start Career Research" :
@@ -736,7 +736,7 @@ const SwotSection = ({ type, items, color, icon = "•" }) => (
     <ul className="space-y-2">
       {items.map((item, i) => (
         <li key={i} className="text-sm flex items-start gap-2">
-          <span className="w-1.5 h-1.5 bg-current rounded-full mt-2 opacity-60 flex-shrink-0" />
+          <span className="w-1.5 h-1.5 bg-current rounded-full mt-2 opacity-60 " />
           <span className="leading-relaxed">{item}</span>
         </li>
       ))}
