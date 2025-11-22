@@ -4,7 +4,7 @@ import JobSeekerPanel from './components/JobSeekerPanel';
 import InvestorPanel from './components/InvestorPanel';
 import SettingsModal from './components/SettingsModal';
 import { MOCK_ANALYSIS } from './data/mockData';
-import LeftPanel from './components/LeftPanel';
+import LeftPanel from './components/leftPanel';
 
 export default function CompanyAnalyzer() {
   // State with hardcoded API key
