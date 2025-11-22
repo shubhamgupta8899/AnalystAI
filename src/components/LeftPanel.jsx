@@ -351,13 +351,13 @@ const LeftPanel = ({
   ];
 
   return (
-    <div className="w-full md:w-[420px] lg:w-[480px] flex flex-col border-r border-gray-200/80 dark:border-gray-800 bg-gradient-to-b from-white to-gray-50/50 dark:from-gray-950 dark:to-gray-900/50 backdrop-blur-sm z-20 shadow-2xl shadow-blue-500/5">
+    <div className="w-full md:w-[420px] lg:w-[480px] flex flex-col border-r border-gray-200/80 dark:border-gray-800  from-white to-gray-50/50 dark:from-gray-950 dark:to-gray-900/50 backdrop-blur-sm z-20 shadow-2xl shadow-blue-500/5">
       
       {/* Enhanced Header */}
-      <div className="h-20 px-6 border-b border-gray-100/80 dark:border-gray-800 flex items-center justify-between bg-gradient-to-r from-blue-600/10 to-purple-600/10 dark:from-blue-900/20 dark:to-purple-900/20 backdrop-blur-md">
+      <div className="h-20 px-6 border-b border-gray-100/80 dark:border-gray-800 flex items-center justify-between  from-blue-600/10 to-purple-600/10 dark:from-blue-900/20 dark:to-purple-900/20 backdrop-blur-md">
         <div className="flex items-center gap-4">
           <div className="relative">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/25">
+            <div className="w-12 h-12  from-blue-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/25">
               <Building2 className="w-6 h-6 text-white" />
             </div>
             <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-400 rounded-full border-2 border-white dark:border-gray-950 flex items-center justify-center">
@@ -365,7 +365,7 @@ const LeftPanel = ({
             </div>
           </div>
           <div>
-            <h1 className="font-bold text-lg bg-gradient-to-r from-gray-800 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+            <h1 className="font-bold text-lg  from-gray-800 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
               AnalystAI
             </h1>
             <div className="flex items-center gap-2">
@@ -405,7 +405,7 @@ const LeftPanel = ({
                 onClick={() => setUserMode(mode.id)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
                   userMode === mode.id
-                    ? `bg-gradient-to-r ${mode.color} text-white shadow-lg`
+                    ? ` ${mode.color} text-white shadow-lg`
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
                 }`}
               >
@@ -418,13 +418,13 @@ const LeftPanel = ({
       </div>
 
       {/* Enhanced Messages List */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-8 bg-gradient-to-b from-transparent to-blue-50/30 dark:to-blue-900/5">
+      <div className="flex-1 overflow-y-auto p-6 space-y-8  from-transparent to-blue-50/30 dark:to-blue-900/5">
         {messages.length === 1 && (
           <div className="text-center space-y-6 animate-in fade-in duration-500">
             {/* Job Seeker Mode Welcome */}
             {userMode === 'job-seeker' && (
               <>
-                <div className="w-20 h-20 mx-auto bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 rounded-3xl flex items-center justify-center">
+                <div className="w-20 h-20 mx-auto  from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 rounded-3xl flex items-center justify-center">
                   <Briefcase className="w-8 h-8 text-green-500" />
                 </div>
                 <div>
@@ -476,7 +476,7 @@ const LeftPanel = ({
             {/* General Mode Welcome */}
             {userMode === 'general' && (
               <>
-                <div className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-3xl flex items-center justify-center">
+                <div className="w-20 h-20 mx-auto  from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-3xl flex items-center justify-center">
                   <Sparkles className="w-8 h-8 text-blue-500" />
                 </div>
                 <div>
@@ -506,7 +506,7 @@ const LeftPanel = ({
             {/* Investor Mode Welcome */}
             {userMode === 'investor' && (
               <>
-                <div className="w-20 h-20 mx-auto bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 rounded-3xl flex items-center justify-center">
+                <div className="w-20 h-20 mx-auto  from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 rounded-3xl flex items-center justify-center">
                   <TrendingUp className="w-8 h-8 text-purple-500" />
                 </div>
                 <div>
@@ -554,7 +554,7 @@ const LeftPanel = ({
         {/* Typing Indicator */}
         {isTyping && (
           <div className="flex gap-4 animate-in fade-in slide-in-from-bottom-4 duration-300">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 flex items-center justify-center shrink-0 shadow-sm">
+            <div className="w-10 h-10 rounded-2xl  from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 flex items-center justify-center shrink-0 shadow-sm">
               <Bot className="w-5 h-5 text-blue-500" />
             </div>
             <div className="flex flex-col gap-3 flex-1">
@@ -572,7 +572,7 @@ const LeftPanel = ({
         {/* Transcribing Indicator */}
         {isTranscribing && (
           <div className="flex gap-4 animate-in fade-in slide-in-from-bottom-4 duration-300">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 flex items-center justify-center shrink-0 shadow-sm">
+            <div className="w-10 h-10 rounded-2xl  from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 flex items-center justify-center shrink-0 shadow-sm">
               <Mic className="w-5 h-5 text-green-500" />
             </div>
             <div className="flex flex-col gap-3 flex-1">
@@ -717,7 +717,7 @@ const LeftPanel = ({
               className={`p-4 rounded-2xl transition-all duration-300 shadow-lg ${
                 !inputValue.trim() || isTyping || isTranscribing
                   ? 'bg-gray-300 dark:bg-gray-700 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-blue-500/25 hover:shadow-xl hover:scale-105'
+                  : ' from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-blue-500/25 hover:shadow-xl hover:scale-105'
               }`}
             >
               <Send className={`w-4 h-4 ${
@@ -772,8 +772,8 @@ const EnhancedMessage = ({ message, onOptionSelect }) => (
       {/* Avatar */}
       <div className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 shadow-sm ${
         message.role === 'user' 
-          ? 'bg-gradient-to-br from-gray-700 to-gray-900' 
-          : 'bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30'
+          ? ' from-gray-700 to-gray-900' 
+          : ' from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30'
       }`}>
         {message.role === 'user' ? (
           <User className="w-5 h-5 text-white" />
@@ -786,7 +786,7 @@ const EnhancedMessage = ({ message, onOptionSelect }) => (
       <div className="flex-1 space-y-3">
         <div className={`p-4 rounded-2xl text-sm leading-relaxed shadow-sm ${
           message.role === 'user' 
-            ? 'bg-gradient-to-r from-gray-800 to-gray-700 text-white rounded-br-none shadow-gray-500/10' 
+            ? ' from-gray-800 to-gray-700 text-white rounded-br-none shadow-gray-500/10' 
             : 'bg-white/90 dark:bg-gray-800/90 border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-bl-none shadow-blue-500/5 backdrop-blur-sm'
         }`}>
           {message.content}
