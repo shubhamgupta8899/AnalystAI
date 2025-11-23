@@ -37,18 +37,20 @@ const LeftPanel = ({
   messagesEndRef,
   onSend,
   onOptionSelect,
-  onSettingsClick
+  onSettingsClick,
+  userMode,
+  setUserMode,
+  isRecording,
+  recordingTime,
+  formatRecordingTime,
+  onVoiceToggle
 }) => {
-  const [isRecording, setIsRecording] = useState(false);
-  const [recordingTime, setRecordingTime] = useState(0);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioChunks, setAudioChunks] = useState([]);
   const [showFileMenu, setShowFileMenu] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isTranscribing, setIsTranscribing] = useState(false);
-  const [userMode, setUserMode] = useState('general'); // 'general', 'job-seeker', 'investor'
   const fileInputRef = useRef(null);
-  const recordingIntervalRef = useRef(null);
 
   const ASSEMBLYAI_API_KEY = "7022828569bb459b95206dd7706d4671";
 
@@ -92,13 +94,7 @@ const LeftPanel = ({
       recorder.start(1000); // Collect data every second
       setMediaRecorder(recorder);
       setAudioChunks(chunks);
-      setIsRecording(true);
-      setRecordingTime(0);
-
-      // Start timer
-      recordingIntervalRef.current = setInterval(() => {
-        setRecordingTime(prev => prev + 1);
-      }, 1000);
+      onVoiceToggle(); // Start recording via parent
 
     } catch (error) {
       console.error('Error starting recording:', error);
@@ -109,10 +105,16 @@ const LeftPanel = ({
   const stopRecording = () => {
     if (mediaRecorder && mediaRecorder.state === 'recording') {
       mediaRecorder.stop();
-      setIsRecording(false);
-      if (recordingIntervalRef.current) {
-        clearInterval(recordingIntervalRef.current);
-      }
+      onVoiceToggle(); // Stop recording via parent
+    }
+  };
+
+  // Handle voice toggle
+  const handleVoiceButtonClick = () => {
+    if (isRecording) {
+      stopRecording();
+    } else {
+      startRecording();
     }
   };
 
@@ -306,18 +308,9 @@ const LeftPanel = ({
     return <File className="w-4 h-4" />;
   };
 
-  const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      if (recordingIntervalRef.current) {
-        clearInterval(recordingIntervalRef.current);
-      }
       if (mediaRecorder && mediaRecorder.state === 'recording') {
         mediaRecorder.stop();
       }
@@ -597,7 +590,7 @@ const LeftPanel = ({
         {/* Quick Action Buttons */}
         <div className="flex items-center gap-2 mb-4">
           <button 
-            onClick={isRecording ? stopRecording : startRecording}
+            onClick={handleVoiceButtonClick}
             disabled={isTranscribing}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
               isRecording 
@@ -610,7 +603,7 @@ const LeftPanel = ({
             {isRecording ? (
               <>
                 <MicOff className="w-3.5 h-3.5" />
-                Stop ({formatTime(recordingTime)})
+                Stop ({formatRecordingTime(recordingTime)})
               </>
             ) : isTranscribing ? (
               <>

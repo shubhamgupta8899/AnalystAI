@@ -19,6 +19,11 @@ export default function CompanyAnalyzer() {
   const [loadingStep, setLoadingStep] = useState("");
   const [userMode, setUserMode] = useState('general'); // 'general', 'job-seeker', 'investor'
   
+  // Voice recording states
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordingTime, setRecordingTime] = useState(0);
+  const recordingTimerRef = useRef(null);
+  
   // Conversation State Machine (for Simulation)
   const [conversationState, setConversationState] = useState({
     stage: 'IDLE', // IDLE, AWAITING_PURPOSE, AWAITING_DETAIL
@@ -32,7 +37,63 @@ export default function CompanyAnalyzer() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
-  // --- Logic ---
+  // Voice recording timer effect
+  useEffect(() => {
+    if (isRecording) {
+      recordingTimerRef.current = setInterval(() => {
+        setRecordingTime(prevTime => prevTime + 1);
+      }, 1000);
+    } else {
+      if (recordingTimerRef.current) {
+        clearInterval(recordingTimerRef.current);
+        recordingTimerRef.current = null;
+      }
+    }
+
+    return () => {
+      if (recordingTimerRef.current) {
+        clearInterval(recordingTimerRef.current);
+      }
+    };
+  }, [isRecording]);
+
+  // Format recording time for display
+  const formatRecordingTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  };
+
+  // Voice recording handlers
+  const startVoiceRecording = () => {
+    setIsRecording(true);
+    setRecordingTime(0);
+    // Here you would integrate with your actual voice recognition API
+    console.log('Voice recording started');
+  };
+
+  const stopVoiceRecording = () => {
+    setIsRecording(false);
+    // Here you would process the recorded audio and convert to text
+    console.log('Voice recording stopped after', recordingTime, 'seconds');
+    
+    // Simulate voice recognition result (replace with actual voice API)
+    const simulatedVoiceText = "Analyze Microsoft";
+    if (simulatedVoiceText) {
+      setInputValue(simulatedVoiceText);
+      handleSend(null, simulatedVoiceText);
+    }
+  };
+
+  const handleVoiceToggle = () => {
+    if (isRecording) {
+      stopVoiceRecording();
+    } else {
+      startVoiceRecording();
+    }
+  };
+
+  // --- Existing Logic ---
 
   const handleOptionSelect = (optionText) => {
     handleSend(null, optionText);
@@ -491,6 +552,11 @@ Now, provide your analysis in the specified JSON format:
         onSettingsClick={() => setShowSettings(true)}
         userMode={userMode}
         setUserMode={setUserMode}
+        // Add voice recording props
+        isRecording={isRecording}
+        recordingTime={recordingTime}
+        formatRecordingTime={formatRecordingTime}
+        onVoiceToggle={handleVoiceToggle}
       />
       
       {renderRightPanel()}
