@@ -47,31 +47,31 @@ const RightPanel = ({ analysis, onReset, onQuickStart, userMode = 'job-seeker' }
 
   return (
     <div className="flex flex-1 flex-col min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30 dark:from-gray-900 dark:to-blue-900/20 overflow-hidden">
-      <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 animate-in fade-in slide-in-from-right-4 duration-500">
-        {/* Header Section */}
-        <div className="mb-8">
-          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6">
-            <div className="flex items-start gap-4">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg border border-blue-200 dark:border-blue-800 font-bold text-2xl text-white">
+      <div className="flex-1 overflow-y-auto p-3 xs:p-4 sm:p-5 md:p-6 lg:p-8 animate-in fade-in slide-in-from-right-4 duration-500">
+        {/* Header Section - Made Responsive */}
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
+            <div className="flex items-start gap-3 sm:gap-4">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg border border-blue-200 dark:border-blue-800 font-bold text-xl sm:text-2xl text-white">
                 {analysis.ticker?.[0] || analysis.companyName?.[0] || "C"}
               </div>
               <div className="flex-1 min-w-0">
-                <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white truncate">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white truncate">
                   {analysis.companyName}
                 </h2>
-                <div className="flex flex-wrap items-center gap-2 mt-2">
+                <div className="flex flex-wrap items-center gap-1 sm:gap-2 mt-1 sm:mt-2">
                   <span className="font-mono bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-2 py-1 rounded-lg text-xs font-medium">
                     {analysis.ticker}
                   </span>
-                  <span className="hidden sm:inline text-gray-400">•</span>
-                  <span className={`flex items-center gap-1.5 text-sm font-semibold px-3 py-1 rounded-full ${
+                  <span className="hidden xs:inline text-gray-400">•</span>
+                  <span className={`flex items-center gap-1.5 text-xs sm:text-sm font-semibold px-2 sm:px-3 py-1 rounded-full ${
                     analysis.sentiment?.toLowerCase() === 'bullish' 
                       ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300' 
                       : analysis.sentiment?.toLowerCase() === 'bearish'
                       ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300'
                       : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
                   }`}>
-                    <TrendingUp className={`w-3.5 h-3.5 ${
+                    <TrendingUp className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${
                       analysis.sentiment?.toLowerCase() === 'bullish' ? '' : 
                       analysis.sentiment?.toLowerCase() === 'bearish' ? 'rotate-180' : ''
                     }`} />
@@ -82,80 +82,81 @@ const RightPanel = ({ analysis, onReset, onQuickStart, userMode = 'job-seeker' }
             </div>
             <button 
               onClick={onReset} 
-              className="flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl hover:shadow-md transition-all duration-200 text-sm font-medium"
+              className="flex items-center gap-2 px-3 sm:px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl hover:shadow-md transition-all duration-200 text-sm font-medium self-start lg:self-auto"
             >
               <RefreshCw className="w-4 h-4" /> 
               <span className="hidden sm:inline">New Analysis</span>
+              <span className="sm:hidden">New</span>
             </button>
           </div>
 
-          {/* Mode-specific Quick Stats Bar */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+          {/* Mode-specific Quick Stats Bar - Made Responsive */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-4 sm:mb-6">
             {userMode === 'job-seeker' ? (
               <>
-                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-3 rounded-xl border border-gray-100 dark:border-gray-700">
-                  <div className="flex items-center gap-2">
-                    <Star className="w-4 h-4 text-yellow-500" />
-                    <span className="text-xs font-medium text-gray-500">Company Rating</span>
+                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-2 sm:p-3 rounded-xl border border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <Star className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-500" />
+                    <span className="text-xs font-medium text-gray-500">Rating</span>
                   </div>
                   <p className="text-sm font-semibold text-gray-900 dark:text-white mt-1">4.2/5</p>
                 </div>
-                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-3 rounded-xl border border-gray-100 dark:border-gray-700">
-                  <div className="flex items-center gap-2">
-                    <Wallet className="w-4 h-4 text-green-500" />
+                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-2 sm:p-3 rounded-xl border border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <Wallet className="w-3 h-3 sm:w-4 sm:h-4 text-green-500" />
                     <span className="text-xs font-medium text-gray-500">Avg Salary</span>
                   </div>
                   <p className="text-sm font-semibold text-green-600 dark:text-green-400 mt-1">
                     ${analysis.salaryRange || "125K"}
                   </p>
                 </div>
-                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-3 rounded-xl border border-gray-100 dark:border-gray-700">
-                  <div className="flex items-center gap-2">
-                    <Heart className="w-4 h-4 text-red-500" />
-                    <span className="text-xs font-medium text-gray-500">Culture Score</span>
+                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-2 sm:p-3 rounded-xl border border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-500" />
+                    <span className="text-xs font-medium text-gray-500">Culture</span>
                   </div>
                   <p className="text-sm font-semibold text-gray-900 dark:text-white mt-1">4.5/5</p>
                 </div>
-                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-3 rounded-xl border border-gray-100 dark:border-gray-700">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-blue-500" />
-                    <span className="text-xs font-medium text-gray-500">Open Positions</span>
+                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-2 sm:p-3 rounded-xl border border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-blue-500" />
+                    <span className="text-xs font-medium text-gray-500">Positions</span>
                   </div>
                   <p className="text-sm font-semibold text-gray-900 dark:text-white mt-1">247</p>
                 </div>
               </>
             ) : userMode === 'investor' ? (
               <>
-                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-3 rounded-xl border border-gray-100 dark:border-gray-700">
-                  <div className="flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4 text-green-500" />
+                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-2 sm:p-3 rounded-xl border border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 text-green-500" />
                     <span className="text-xs font-medium text-gray-500">Growth</span>
                   </div>
                   <p className="text-sm font-semibold text-green-600 dark:text-green-400 mt-1">
                     {analysis.financials?.growth || "+12.5%"}
                   </p>
                 </div>
-                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-3 rounded-xl border border-gray-100 dark:border-gray-700">
-                  <div className="flex items-center gap-2">
-                    <DollarSign className="w-4 h-4 text-blue-500" />
+                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-2 sm:p-3 rounded-xl border border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <DollarSign className="w-3 h-3 sm:w-4 sm:h-4 text-blue-500" />
                     <span className="text-xs font-medium text-gray-500">P/E Ratio</span>
                   </div>
                   <p className="text-sm font-semibold text-gray-900 dark:text-white mt-1">
                     {analysis.financials?.peRatio || "24.5"}
                   </p>
                 </div>
-                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-3 rounded-xl border border-gray-100 dark:border-gray-700">
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-purple-500" />
+                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-2 sm:p-3 rounded-xl border border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <ShieldCheck className="w-3 h-3 sm:w-4 sm:h-4 text-purple-500" />
                     <span className="text-xs font-medium text-gray-500">Stability</span>
                   </div>
                   <p className="text-sm font-semibold text-gray-900 dark:text-white mt-1">
                     {analysis.financials?.stability || "High"}
                   </p>
                 </div>
-                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-3 rounded-xl border border-gray-100 dark:border-gray-700">
-                  <div className="flex items-center gap-2">
-                    <Globe className="w-4 h-4 text-orange-500" />
+                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-2 sm:p-3 rounded-xl border border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <Globe className="w-3 h-3 sm:w-4 sm:h-4 text-orange-500" />
                     <span className="text-xs font-medium text-gray-500">Market Cap</span>
                   </div>
                   <p className="text-sm font-semibold text-gray-900 dark:text-white mt-1">
@@ -165,32 +166,32 @@ const RightPanel = ({ analysis, onReset, onQuickStart, userMode = 'job-seeker' }
               </>
             ) : (
               <>
-                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-3 rounded-xl border border-gray-100 dark:border-gray-700">
-                  <div className="flex items-center gap-2">
-                    <Building2 className="w-4 h-4 text-blue-500" />
+                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-2 sm:p-3 rounded-xl border border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <Building2 className="w-3 h-3 sm:w-4 sm:h-4 text-blue-500" />
                     <span className="text-xs font-medium text-gray-500">Sector</span>
                   </div>
                   <p className="text-sm font-semibold text-gray-900 dark:text-white mt-1">Technology</p>
                 </div>
-                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-3 rounded-xl border border-gray-100 dark:border-gray-700">
-                  <div className="flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4 text-green-500" />
+                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-2 sm:p-3 rounded-xl border border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 text-green-500" />
                     <span className="text-xs font-medium text-gray-500">Growth</span>
                   </div>
                   <p className="text-sm font-semibold text-green-600 dark:text-green-400 mt-1">
                     {analysis.financials?.growth || "+12.5%"}
                   </p>
                 </div>
-                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-3 rounded-xl border border-gray-100 dark:border-gray-700">
-                  <div className="flex items-center gap-2">
-                    <PieChart className="w-4 h-4 text-purple-500" />
+                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-2 sm:p-3 rounded-xl border border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <PieChart className="w-3 h-3 sm:w-4 sm:h-4 text-purple-500" />
                     <span className="text-xs font-medium text-gray-500">Stability</span>
                   </div>
                   <p className="text-sm font-semibold text-gray-900 dark:text-white mt-1">High</p>
                 </div>
-                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-3 rounded-xl border border-gray-100 dark:border-gray-700">
-                  <div className="flex items-center gap-2">
-                    <Globe className="w-4 h-4 text-orange-500" />
+                <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-2 sm:p-3 rounded-xl border border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <Globe className="w-3 h-3 sm:w-4 sm:h-4 text-orange-500" />
                     <span className="text-xs font-medium text-gray-500">Global Rank</span>
                   </div>
                   <p className="text-sm font-semibold text-gray-900 dark:text-white mt-1">#42</p>
@@ -200,19 +201,19 @@ const RightPanel = ({ analysis, onReset, onQuickStart, userMode = 'job-seeker' }
           </div>
         </div>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
+        {/* Main Content Grid - Made Responsive */}
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
           {/* Left Column - Metrics & Summary */}
-          <div className="xl:col-span-2 space-y-6 lg:space-y-8">
-            {/* Key Metrics */}
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-shadow">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-                <BarChart3 className="w-5 h-5 text-blue-500" />
+          <div className="xl:col-span-2 space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-8">
+            {/* Key Metrics - Made Responsive */}
+            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-gray-700 p-4 sm:p-5 md:p-6 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center gap-2">
+                <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500" />
                 {userMode === 'job-seeker' ? 'Career & Culture Metrics' : 
                  userMode === 'investor' ? 'Financial Performance' : 
                  'Business Performance'}
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 {userMode === 'job-seeker' ? (
                   <>
                     <MetricCard 
@@ -290,119 +291,119 @@ const RightPanel = ({ analysis, onReset, onQuickStart, userMode = 'job-seeker' }
               </div>
             </div>
 
-            {/* Enhanced Investment Metrics - Only for Investor Mode */}
+            {/* Enhanced Investment Metrics - Only for Investor Mode - Made Responsive */}
             {userMode === 'investor' && (
-              <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-shadow">
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-green-500" />
+              <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-gray-700 p-4 sm:p-5 md:p-6 shadow-sm hover:shadow-md transition-shadow">
+                <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center gap-2">
+                  <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
                   Investment Metrics & Valuation
                 </h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="text-center p-4 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/10 rounded-xl border border-green-200 dark:border-green-800/30">
-                    <div className="text-2xl font-bold text-green-600 dark:text-green-400">24.5</div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                  <div className="text-center p-3 sm:p-4 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/10 rounded-xl border border-green-200 dark:border-green-800/30">
+                    <div className="text-xl sm:text-2xl font-bold text-green-600 dark:text-green-400">24.5</div>
                     <div className="text-xs text-green-700 dark:text-green-300 font-medium mt-1">P/E Ratio</div>
                   </div>
-                  <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/10 rounded-xl border border-blue-200 dark:border-blue-800/30">
-                    <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">2.1%</div>
+                  <div className="text-center p-3 sm:p-4 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/10 rounded-xl border border-blue-200 dark:border-blue-800/30">
+                    <div className="text-xl sm:text-2xl font-bold text-blue-600 dark:text-blue-400">2.1%</div>
                     <div className="text-xs text-blue-700 dark:text-blue-300 font-medium mt-1">Dividend Yield</div>
                   </div>
-                  <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/10 rounded-xl border border-purple-200 dark:border-purple-800/30">
-                    <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">15.2%</div>
+                  <div className="text-center p-3 sm:p-4 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/10 rounded-xl border border-purple-200 dark:border-purple-800/30">
+                    <div className="text-xl sm:text-2xl font-bold text-purple-600 dark:text-purple-400">15.2%</div>
                     <div className="text-xs text-purple-700 dark:text-purple-300 font-medium mt-1">ROE</div>
                   </div>
-                  <div className="text-center p-4 bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-900/20 dark:to-amber-900/10 rounded-xl border border-orange-200 dark:border-orange-800/30">
-                    <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">1.8</div>
+                  <div className="text-center p-3 sm:p-4 bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-900/20 dark:to-amber-900/10 rounded-xl border border-orange-200 dark:border-orange-800/30">
+                    <div className="text-xl sm:text-2xl font-bold text-orange-600 dark:text-orange-400">1.8</div>
                     <div className="text-xs text-orange-700 dark:text-orange-300 font-medium mt-1">P/B Ratio</div>
                   </div>
                 </div>
-                <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
-                  <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Debt to Equity</span>
-                    <span className="text-sm font-semibold text-gray-900 dark:text-white">0.35</span>
+                <div className="mt-4 sm:mt-6 grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+                  <div className="flex justify-between items-center p-2 sm:p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+                    <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Debt to Equity</span>
+                    <span className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">0.35</span>
                   </div>
-                  <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Current Ratio</span>
-                    <span className="text-sm font-semibold text-gray-900 dark:text-white">1.8</span>
+                  <div className="flex justify-between items-center p-2 sm:p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+                    <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Current Ratio</span>
+                    <span className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">1.8</span>
                   </div>
-                  <div className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">EPS</span>
-                    <span className="text-sm font-semibold text-gray-900 dark:text-white">$6.11</span>
+                  <div className="flex justify-between items-center p-2 sm:p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+                    <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">EPS</span>
+                    <span className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">$6.11</span>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Job Listings Section - Only for Job Seeker Mode */}
+            {/* Job Listings Section - Only for Job Seeker Mode - Made Responsive */}
             {userMode === 'job-seeker' && (
-              <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-shadow">
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-                  <Briefcase className="w-5 h-5 text-blue-500" />
+              <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-gray-700 p-4 sm:p-5 md:p-6 shadow-sm hover:shadow-md transition-shadow">
+                <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center gap-2">
+                  <Briefcase className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500" />
                   Open Positions at {analysis.companyName}
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   {analysis.jobListings?.map((job, index) => (
                     <JobCard key={index} job={job} />
                   )) || (
-                    <div className="text-center py-8">
-                      <Briefcase className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                      <p className="text-gray-500 dark:text-gray-400">Loading job listings...</p>
+                    <div className="text-center py-6 sm:py-8">
+                      <Briefcase className="w-8 h-8 sm:w-12 sm:h-12 text-gray-400 mx-auto mb-3 sm:mb-4" />
+                      <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base">Loading job listings...</p>
                     </div>
                   )}
                 </div>
               </div>
             )}
 
-            {/* Executive Summary */}
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-shadow">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-purple-500" />
+            {/* Executive Summary - Made Responsive */}
+            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-gray-700 p-4 sm:p-5 md:p-6 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 flex items-center gap-2">
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500" />
                 {userMode === 'job-seeker' ? 'Career Opportunity Summary' : 
                  userMode === 'investor' ? 'Investment Summary' : 
                  'Executive Summary'}
               </h3>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm lg:text-base">
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm sm:text-base">
                 {analysis.summary}
               </p>
-              <div className="mt-4 flex flex-wrap gap-2">
+              <div className="mt-3 sm:mt-4 flex flex-wrap gap-1 sm:gap-2">
                 {userMode === 'job-seeker' ? (
                   <>
-                    <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-medium rounded-full">
+                    <span className="px-2 sm:px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-medium rounded-full">
                       Great Culture
                     </span>
-                    <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-medium rounded-full">
+                    <span className="px-2 sm:px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-medium rounded-full">
                       Remote Friendly
                     </span>
-                    <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs font-medium rounded-full">
+                    <span className="px-2 sm:px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs font-medium rounded-full">
                       Career Growth
                     </span>
-                    <span className="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-xs font-medium rounded-full">
+                    <span className="px-2 sm:px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-xs font-medium rounded-full">
                       Learning Opportunities
                     </span>
                   </>
                 ) : userMode === 'investor' ? (
                   <>
-                    <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-medium rounded-full">
+                    <span className="px-2 sm:px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-medium rounded-full">
                       Strong Growth
                     </span>
-                    <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-medium rounded-full">
+                    <span className="px-2 sm:px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-medium rounded-full">
                       Market Leader
                     </span>
-                    <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs font-medium rounded-full">
+                    <span className="px-2 sm:px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs font-medium rounded-full">
                       Stable Dividend
                     </span>
-                    <span className="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 text-xs font-medium rounded-full">
+                    <span className="px-2 sm:px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 text-xs font-medium rounded-full">
                       Innovation Focus
                     </span>
                   </>
                 ) : (
                   <>
-                    <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-medium rounded-full">
+                    <span className="px-2 sm:px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-medium rounded-full">
                       Market Leader
                     </span>
-                    <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-medium rounded-full">
+                    <span className="px-2 sm:px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-medium rounded-full">
                       Growth Phase
                     </span>
-                    <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs font-medium rounded-full">
+                    <span className="px-2 sm:px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs font-medium rounded-full">
                       Innovation Focus
                     </span>
                   </>
@@ -411,11 +412,11 @@ const RightPanel = ({ analysis, onReset, onQuickStart, userMode = 'job-seeker' }
             </div>
           </div>
 
-          {/* Right Column - SWOT Analysis */}
-          <div className="xl:col-span-1 space-y-6 lg:space-y-8">
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-shadow">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-                <div className="w-5 h-5 bg-gradient-to-br from-blue-500 to-purple-600 rounded flex items-center justify-center">
+          {/* Right Column - SWOT Analysis - Made Responsive */}
+          <div className="xl:col-span-1 space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-8">
+            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-gray-700 p-4 sm:p-5 md:p-6 shadow-sm hover:shadow-md transition-shadow">
+              <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 flex items-center gap-2">
+                <div className="w-4 h-4 sm:w-5 sm:h-5 bg-gradient-to-br from-blue-500 to-purple-600 rounded flex items-center justify-center">
                   <span className="text-white text-xs font-bold">
                     {userMode === 'job-seeker' ? 'J' : userMode === 'investor' ? 'I' : 'S'}
                   </span>
@@ -424,7 +425,7 @@ const RightPanel = ({ analysis, onReset, onQuickStart, userMode = 'job-seeker' }
                  userMode === 'investor' ? 'Investment Analysis' : 
                  'SWOT Analysis'}
               </h3>
-              <div className="grid grid-cols-1 gap-4">
+              <div className="grid grid-cols-1 gap-3 sm:gap-4">
                 <SwotSection 
                   type={userMode === 'job-seeker' ? "Pros" : "Strengths"} 
                   items={analysis.swot?.strengths || []} 
@@ -452,20 +453,20 @@ const RightPanel = ({ analysis, onReset, onQuickStart, userMode = 'job-seeker' }
               </div>
             </div>
 
-            {/* Company Culture - Only for Job Seeker Mode */}
+            {/* Company Culture - Only for Job Seeker Mode - Made Responsive */}
             {userMode === 'job-seeker' && (
-              <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-shadow">
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                  <Heart className="w-5 h-5 text-red-500" />
+              <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-gray-700 p-4 sm:p-5 md:p-6 shadow-sm hover:shadow-md transition-shadow">
+                <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 flex items-center gap-2">
+                  <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-red-500" />
                   Company Culture
                 </h3>
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   <CultureMetric label="Work-Life Balance" value={4.2} max={5} />
                   <CultureMetric label="Career Growth" value={4.5} max={5} />
                   <CultureMetric label="Management" value={4.0} max={5} />
                   <CultureMetric label="Compensation" value={4.3} max={5} />
                 </div>
-                <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                <div className="mt-3 sm:mt-4 p-2 sm:p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                   <p className="text-sm text-blue-700 dark:text-blue-300">
                     "Great learning environment with excellent growth opportunities"
                   </p>
@@ -474,29 +475,29 @@ const RightPanel = ({ analysis, onReset, onQuickStart, userMode = 'job-seeker' }
               </div>
             )}
 
-            {/* Investment Recommendations - Only for Investor Mode */}
+            {/* Investment Recommendations - Only for Investor Mode - Made Responsive */}
             {userMode === 'investor' && (
-              <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-shadow">
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                  <Target className="w-5 h-5 text-green-500" />
+              <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-gray-700 p-4 sm:p-5 md:p-6 shadow-sm hover:shadow-md transition-shadow">
+                <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 flex items-center gap-2">
+                  <Target className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
                   Investment Recommendation
                 </h3>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800/30">
+                <div className="space-y-3 sm:space-y-4">
+                  <div className="flex items-center justify-between p-2 sm:p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800/30">
                     <span className="text-sm font-semibold text-green-700 dark:text-green-300">Rating</span>
-                    <span className="px-3 py-1 bg-green-500 text-white text-sm font-bold rounded-full">BUY</span>
+                    <span className="px-2 sm:px-3 py-1 bg-green-500 text-white text-sm font-bold rounded-full">BUY</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="text-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                    <div className="text-center p-2 sm:p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                       <div className="text-lg font-bold text-blue-600 dark:text-blue-400">$185</div>
                       <div className="text-xs text-blue-700 dark:text-blue-300">Target Price</div>
                     </div>
-                    <div className="text-center p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                    <div className="text-center p-2 sm:p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
                       <div className="text-lg font-bold text-purple-600 dark:text-purple-400">15%</div>
                       <div className="text-xs text-purple-700 dark:text-purple-300">Upside Potential</div>
                     </div>
                   </div>
-                  <div className="p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+                  <div className="p-2 sm:p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
                     <p className="text-sm text-gray-600 dark:text-gray-300">
                       Strong fundamentals with consistent revenue growth and market leadership position.
                     </p>
@@ -646,60 +647,60 @@ const EnhancedEmptyState = ({ onQuickStart, userMode = 'job-seeker' }) => {
 
   return (
     <div className="flex-1 overflow-y-auto">
-      <div className="max-w-7xl mx-auto p-6 lg:p-8">
-        {/* Hero Section */}
-        <div className="text-center mb-12 lg:mb-16">
-          <div className="relative inline-block mb-6">
-            <div className="w-24 h-24 lg:w-32 lg:h-32 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-2xl mb-4 mx-auto">
+      <div className="max-w-7xl mx-auto p-4 sm:p-5 md:p-6 lg:p-8">
+        {/* Hero Section - Made Responsive */}
+        <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16">
+          <div className="relative inline-block mb-4 sm:mb-5 md:mb-6">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-2xl mb-3 sm:mb-4 mx-auto">
               {userMode === 'job-seeker' ? (
-                <Briefcase className="w-12 h-12 lg:w-16 lg:h-16 text-white" />
+                <Briefcase className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 text-white" />
               ) : userMode === 'investor' ? (
-                <TrendingUp className="w-12 h-12 lg:w-16 lg:h-16 text-white" />
+                <TrendingUp className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 text-white" />
               ) : (
-                <BarChart3 className="w-12 h-12 lg:w-16 lg:h-16 text-white" />
+                <BarChart3 className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 text-white" />
               )}
             </div>
-            <div className="absolute -top-2 -right-2 w-8 h-8 lg:w-10 lg:h-10 bg-green-500 rounded-full flex items-center justify-center animate-pulse shadow-lg">
-              <Zap className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
+            <div className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-green-500 rounded-full flex items-center justify-center animate-pulse shadow-lg">
+              <Zap className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white" />
             </div>
           </div>
           
-          <h1 className="text-4xl lg:text-6xl font-bold bg-gradient-to-br from-gray-900 to-blue-600 dark:from-white dark:to-blue-400 bg-clip-text text-transparent mb-4">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold bg-gradient-to-br from-gray-900 to-blue-600 dark:from-white dark:to-blue-400 bg-clip-text text-transparent mb-3 sm:mb-4">
             {modeTitles[userMode]}
           </h1>
-          <p className="text-xl lg:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             {modeDescriptions[userMode]}
           </p>
         </div>
 
-        {/* Quick Actions Grid */}
-        <div className="mb-12 lg:mb-16">
-          <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white text-center mb-8 lg:mb-12">
+        {/* Quick Actions Grid - Made Responsive */}
+        <div className="mb-8 sm:mb-10 md:mb-12 lg:mb-16">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12">
             {userMode === 'job-seeker' ? 'What career information do you need?' :
              userMode === 'investor' ? 'What investment insights are you looking for?' :
              'What would you like to analyze?'}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
             {quickActions[userMode].map((action, index) => (
               <div
                 key={index}
-                className="group cursor-pointer bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                className="group cursor-pointer bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-200 dark:border-gray-700 p-4 sm:p-5 md:p-6 shadow-sm hover:shadow-2xl transition-all duration-300 hover:scale-105"
                 onClick={() => onQuickStart && onQuickStart(action.title)}
               >
-                <div className={`w-12 h-12 bg-gradient-to-br ${action.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                  <action.icon className="w-6 h-6 text-white" />
+                <div className={`w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br ${action.color} rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                  <action.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">
                   {action.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed">
                   {action.description}
                 </p>
                 <div className="space-y-1">
                   {action.examples.map((example, i) => (
                     <div key={i} className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                       <ArrowRight className="w-3 h-3" />
-                      <span>{example}</span>
+                      <span className="truncate">{example}</span>
                     </div>
                   ))}
                 </div>
@@ -708,21 +709,21 @@ const EnhancedEmptyState = ({ onQuickStart, userMode = 'job-seeker' }) => {
           </div>
         </div>
 
-        {/* Popular Companies */}
-        <div className="mb-12 lg:mb-16">
-          <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white text-center mb-8 lg:mb-12">
+        {/* Popular Companies - Made Responsive */}
+        <div className="mb-8 sm:mb-10 md:mb-12 lg:mb-16">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12">
             {userMode === 'job-seeker' ? 'Top Companies to Research' :
              userMode === 'investor' ? 'Popular Investment Opportunities' :
              'Popular Companies to Analyze'}
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
             {popularCompanies[userMode].map((company, index) => (
               <div
                 key={index}
-                className="group cursor-pointer bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700 p-4 shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-105"
+                className="group cursor-pointer bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700 p-3 sm:p-4 shadow-sm hover:shadow-lg transition-all duration-300 hover:scale-105"
                 onClick={() => onQuickStart && onQuickStart(company.name)}
               >
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg flex items-center justify-center mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-300">
                   <span className="text-white font-bold text-sm">
                     {company.name[0]}
                   </span>
@@ -731,10 +732,10 @@ const EnhancedEmptyState = ({ onQuickStart, userMode = 'job-seeker' }) => {
                   {company.name}
                 </h3>
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded">
+                  <span className="font-mono text-xs text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-1 sm:px-2 py-1 rounded">
                     {company.ticker}
                   </span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                  <span className="text-xs text-gray-500 dark:text-gray-400 truncate hidden xs:block">
                     {company.industry}
                   </span>
                 </div>
@@ -743,14 +744,14 @@ const EnhancedEmptyState = ({ onQuickStart, userMode = 'job-seeker' }) => {
           </div>
         </div>
 
-        {/* Features Grid */}
-        <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-3xl p-8 lg:p-12">
-          <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white text-center mb-8 lg:mb-12">
+        {/* Features Grid - Made Responsive */}
+        <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12">
             {userMode === 'job-seeker' ? 'Why Use Our Career Analyst?' :
              userMode === 'investor' ? 'Why Use Our Investment Analyst?' :
              'Why Use Our AI Analyst?'}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
             <FeatureCard
               icon={Clock}
               title="Real-time Data"
@@ -782,36 +783,36 @@ const EnhancedEmptyState = ({ onQuickStart, userMode = 'job-seeker' }) => {
           </div>
         </div>
 
-        {/* CTA Section */}
-        <div className="text-center mt-12 lg:mt-16">
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-200 dark:border-gray-700 p-8 lg:p-12 shadow-sm">
-            <Search className="w-16 h-16 text-blue-500 mx-auto mb-6" />
-            <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-4">
+        {/* CTA Section - Made Responsive */}
+        <div className="text-center mt-8 sm:mt-10 md:mt-12 lg:mt-16">
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-200 dark:border-gray-700 p-6 sm:p-8 md:p-10 lg:p-12 shadow-sm">
+            <Search className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 text-blue-500 mx-auto mb-4 sm:mb-5 md:mb-6" />
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
               Ready to Get Started?
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 text-lg mb-6 max-w-2xl mx-auto">
+            <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg mb-4 sm:mb-5 md:mb-6 max-w-2xl mx-auto">
               {userMode === 'job-seeker' ? 
                 "Start a conversation with our AI career analyst to get comprehensive company insights and career guidance." :
                userMode === 'investor' ?
                 "Start a conversation with our AI investment analyst to get detailed financial analysis and market insights." :
                 "Start a conversation with our AI analyst to get comprehensive company insights and strategic recommendations."}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
               <button 
                 onClick={() => onQuickStart && onQuickStart(
                   userMode === 'job-seeker' ? "Company Culture" :
                   userMode === 'investor' ? "Financial Performance" :
                   "Financial Analysis"
                 )}
-                className="px-8 py-4 bg-gradient-to-br from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center gap-3"
+                className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-br from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center gap-2 sm:gap-3 text-sm sm:text-base"
               >
-                <Zap className="w-5 h-5" />
+                <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                 {userMode === 'job-seeker' ? "Start Career Research" :
                  userMode === 'investor' ? "Start Investment Analysis" :
                  "Start Company Analysis"}
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
-              <button className="px-8 py-4 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-blue-500 hover:text-blue-500 font-semibold rounded-xl transition-all duration-300">
+              <button className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-blue-500 hover:text-blue-500 font-semibold rounded-xl transition-all duration-300 text-sm sm:text-base">
                 View Sample Reports
               </button>
             </div>
@@ -824,32 +825,32 @@ const EnhancedEmptyState = ({ onQuickStart, userMode = 'job-seeker' }) => {
 
 const FeatureCard = ({ icon: Icon, title, description }) => (
   <div className="text-center group">
-    <div className="w-16 h-16 bg-white dark:bg-gray-800 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm group-hover:shadow-md transition-shadow duration-300">
-      <Icon className="w-8 h-8 text-blue-500" />
+    <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-white dark:bg-gray-800 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-sm group-hover:shadow-md transition-shadow duration-300">
+      <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-blue-500" />
     </div>
-    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+    <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">
       {title}
     </h3>
-    <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+    <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed">
       {description}
     </p>
   </div>
 );
 
-// Simple MetricCard component for the analysis view
+// Simple MetricCard component for the analysis view - Made Responsive
 const MetricCard = ({ label, value, trend, icon: Icon }) => (
-  <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-300">
-    <div className="flex items-center justify-between mb-3">
+  <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm p-3 sm:p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-300">
+    <div className="flex items-center justify-between mb-2 sm:mb-3">
       <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{label}</span>
-      <div className="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
-        <Icon className="w-4 h-4 text-blue-500" />
+      <div className="p-1 sm:p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+        <Icon className="w-3 h-3 sm:w-4 sm:h-4 text-blue-500" />
       </div>
     </div>
     <div className="flex items-end justify-between">
-      <span className="text-2xl font-bold text-gray-900 dark:text-white">{value}</span>
+      <span className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 dark:text-white">{value}</span>
       {trend && (
-        <div className="flex items-center gap-1 bg-green-50 dark:bg-green-900/30 px-2 py-1 rounded-full">
-          <TrendingUp className="w-3 h-3 text-green-600 dark:text-green-400" />
+        <div className="flex items-center gap-1 bg-green-50 dark:bg-green-900/30 px-1 sm:px-2 py-1 rounded-full">
+          <TrendingUp className="w-2 h-2 sm:w-3 sm:h-3 text-green-600 dark:text-green-400" />
           <span className="text-xs font-semibold text-green-600 dark:text-green-400">{trend}</span>
         </div>
       )}
@@ -857,17 +858,17 @@ const MetricCard = ({ label, value, trend, icon: Icon }) => (
   </div>
 );
 
-// Simple SwotSection component for the analysis view
+// Simple SwotSection component for the analysis view - Made Responsive
 const SwotSection = ({ type, items, color, icon = "•" }) => (
-  <div className={`p-4 rounded-xl border-2 ${color} backdrop-blur-sm`}>
-    <div className="flex items-center gap-2 mb-3">
+  <div className={`p-3 sm:p-4 rounded-xl border-2 ${color} backdrop-blur-sm`}>
+    <div className="flex items-center gap-2 mb-2 sm:mb-3">
       <span className="text-base">{icon}</span>
       <h4 className="text-sm font-bold uppercase tracking-wide opacity-90">{type}</h4>
     </div>
-    <ul className="space-y-2">
+    <ul className="space-y-1 sm:space-y-2">
       {items.map((item, i) => (
-        <li key={i} className="text-sm flex items-start gap-2">
-          <span className="w-1.5 h-1.5 bg-current rounded-full mt-2 opacity-60 flex-shrink-0" />
+        <li key={i} className="text-xs sm:text-sm flex items-start gap-2">
+          <span className="w-1.5 h-1.5 bg-current rounded-full mt-1.5 sm:mt-2 opacity-60 flex-shrink-0" />
           <span className="leading-relaxed">{item}</span>
         </li>
       ))}
@@ -875,56 +876,56 @@ const SwotSection = ({ type, items, color, icon = "•" }) => (
   </div>
 );
 
-// Job Card Component (Updated without Apply Now button)
+// Job Card Component (Updated without Apply Now button) - Made Responsive
 const JobCard = ({ job }) => (
-  <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-all duration-300 hover:border-blue-300 dark:hover:border-blue-600">
-    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+  <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700 p-3 sm:p-4 hover:shadow-md transition-all duration-300 hover:border-blue-300 dark:hover:border-blue-600">
+    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-3">
       <div className="flex-1">
-        <h4 className="font-semibold text-gray-900 dark:text-white text-lg mb-1">
+        <h4 className="font-semibold text-gray-900 dark:text-white text-base sm:text-lg mb-1">
           {job.title || "Senior Software Engineer"}
         </h4>
-        <div className="flex flex-wrap items-center gap-2 mb-3">
-          <span className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
-            <MapPin className="w-4 h-4" />
+        <div className="flex flex-wrap items-center gap-1 sm:gap-2 mb-2 sm:mb-3">
+          <span className="flex items-center gap-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+            <MapPin className="w-3 h-3 sm:w-4 sm:h-4" />
             {job.location || "San Francisco, CA"}
           </span>
-          <span className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
-            <Clock4 className="w-4 h-4" />
+          <span className="flex items-center gap-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+            <Clock4 className="w-3 h-3 sm:w-4 sm:h-4" />
             {job.type || "Full-time"}
           </span>
-          <span className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
-            <DollarSign className="w-4 h-4" />
+          <span className="flex items-center gap-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+            <DollarSign className="w-3 h-3 sm:w-4 sm:h-4" />
             {job.salary || "$120,000 - $180,000"}
           </span>
         </div>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-2">
+        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mb-2 sm:mb-3 line-clamp-2">
           {job.description || "We are looking for an experienced software engineer to join our dynamic team and help build innovative solutions..."}
         </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-1 sm:gap-2">
           {job.skills?.map((skill, index) => (
-            <span key={index} className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs rounded-full">
+            <span key={index} className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs rounded-full">
               {skill}
             </span>
           )) || (
             <>
-              <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs rounded-full">
+              <span className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs rounded-full">
                 React
               </span>
-              <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs rounded-full">
+              <span className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs rounded-full">
                 Node.js
               </span>
-              <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs rounded-full">
+              <span className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs rounded-full">
                 TypeScript
               </span>
             </>
           )}
         </div>
       </div>
-      <div className="flex sm:flex-col gap-2 sm:items-end">
+      <div className="flex sm:flex-col gap-1 sm:gap-2 sm:items-end mt-2 sm:mt-0">
         <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
           {job.posted || "2 days ago"}
         </span>
-        <div className="px-3 py-2 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-sm font-medium rounded-lg">
+        <div className="px-2 sm:px-3 py-1.5 sm:py-2 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs sm:text-sm font-medium rounded-lg">
           View Details
         </div>
       </div>
@@ -932,21 +933,21 @@ const JobCard = ({ job }) => (
   </div>
 );
 
-// Culture Metric Component
+// Culture Metric Component - Made Responsive
 const CultureMetric = ({ label, value, max = 5 }) => {
   const percentage = (value / max) * 100;
   
   return (
     <div className="flex items-center justify-between">
-      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</span>
-      <div className="flex items-center gap-2">
-        <div className="w-24 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+      <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">{label}</span>
+      <div className="flex items-center gap-1 sm:gap-2">
+        <div className="w-16 sm:w-20 md:w-24 h-1.5 sm:h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
           <div 
             className="h-full bg-gradient-to-r from-green-400 to-blue-500 rounded-full transition-all duration-500"
             style={{ width: `${percentage}%` }}
           />
         </div>
-        <span className="text-sm font-semibold text-gray-900 dark:text-white w-8">
+        <span className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white w-6 sm:w-8">
           {value.toFixed(1)}
         </span>
       </div>

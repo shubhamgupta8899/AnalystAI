@@ -358,9 +358,9 @@ const LeftPanel = ({
   ];
 
   const userModes = [
-    { id: 'job-seeker', name: 'Job Search', icon: Briefcase, color: 'from-green-500 to-emerald-500', description: 'Find your dream job' },
-    { id: 'investor', name: 'Investment Research', icon: TrendingUp, color: 'from-purple-500 to-pink-500', description: 'Smart investment decisions' },
-    { id: 'general', name: 'Company Research', icon: Building2, color: 'from-blue-500 to-cyan-500', description: 'Business intelligence' }
+    { id: 'job-seeker', name: 'Job Search', icon: Briefcase, color: 'from-green-500 to-emerald-500'},
+    { id: 'investor', name: 'Investment Research', icon: TrendingUp, color: 'from-purple-500 to-pink-500'},
+    { id: 'general', name: 'Company Research', icon: Building2, color: 'from-blue-500 to-cyan-500'}
   ];
 
   return (
@@ -763,15 +763,6 @@ const LeftPanel = ({
             </button>
           </div>
           
-          {/* Input Helper Text */}
-          <div className="flex items-center justify-between mt-3 px-1">
-            <span className="text-xs text-gray-400 dark:text-gray-500">
-              Press Enter to send • Shift+Enter for new line
-            </span>
-            <span className="text-xs text-gray-400 dark:text-gray-500">
-              {inputValue.length}/500
-            </span>
-          </div>
         </form>
       </div>
 

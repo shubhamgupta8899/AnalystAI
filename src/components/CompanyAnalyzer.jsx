@@ -6,7 +6,7 @@ import SettingsModal from './components/SettingsModal';
 import { MOCK_ANALYSIS } from './data/mockData';
 import LeftPanel from './components/LeftPanel';
 import { transformLLMData } from './utils/transformLLMData';
-import { useSession } from './hooks/useSession'; // ADD THIS IMPORT
+import { useSession } from './hooks/useSession';
 
 export default function CompanyAnalyzer() {
   // ADD SESSION MANAGEMENT HOOK AT THE TOP
@@ -39,6 +39,9 @@ export default function CompanyAnalyzer() {
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
   const recordingTimerRef = useRef(null);
+  
+  // Mobile sidebar state
+  const [showMobileSidebar, setShowMobileSidebar] = useState(false);
   
   // Conversation State Machine (for Simulation)
   const [conversationState, setConversationState] = useState({
@@ -143,10 +146,20 @@ export default function CompanyAnalyzer() {
     }
   };
 
+  // Mobile sidebar handlers
+  const toggleMobileSidebar = () => {
+    setShowMobileSidebar(!showMobileSidebar);
+  };
+
+  const closeMobileSidebar = () => {
+    setShowMobileSidebar(false);
+  };
+
   // --- Existing Logic ---
 
   const handleOptionSelect = (optionText) => {
     handleSend(null, optionText);
+    closeMobileSidebar();
   };
 
   // ENHANCE handleQuickStart WITH SESSION TRACKING
@@ -159,6 +172,7 @@ export default function CompanyAnalyzer() {
     }
     setInputValue(prompt);
     handleSend(null, prompt);
+    closeMobileSidebar();
   };
 
   const generateResponse = async (userQuery) => {
@@ -593,6 +607,7 @@ Now, provide your analysis in the specified JSON format:
       company: null,
       purpose: null
     });
+    closeMobileSidebar();
   };
 
   // Function to render the appropriate right panel based on user mode
@@ -635,8 +650,8 @@ Now, provide your analysis in the specified JSON format:
 
   // ENHANCED SettingsModal WITH SESSION INFO
   const SimpleSettingsModal = ({ onClose }) => (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-96">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md mx-auto">
         <h2 className="text-xl font-bold mb-4">Settings</h2>
         <div className="space-y-4">
           <div>
@@ -655,16 +670,16 @@ Now, provide your analysis in the specified JSON format:
               Started: {session ? new Date(session.startTime).toLocaleTimeString() : 'N/A'}
             </p>
           </div>
-          <div className="flex justify-between">
+          <div className="flex flex-col sm:flex-row gap-2 justify-between">
             <button
               onClick={handleNewSession}
-              className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
+              className="px-3 py-2 text-sm bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
             >
               New Session
             </button>
             <button
               onClick={onClose}
-              className="px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded hover:bg-gray-400 dark:hover:bg-gray-600"
+              className="px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded hover:bg-gray-400 dark:hover:bg-gray-600 transition-colors"
             >
               Close
             </button>
@@ -674,32 +689,82 @@ Now, provide your analysis in the specified JSON format:
     </div>
   );
 
-  return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-900 font-sans text-gray-800 dark:text-gray-100 overflow-hidden">
-      <LeftPanel
-        apiKey={apiKey}
-        messages={messages}
-        inputValue={inputValue}
-        setInputValue={setInputValue}
-        isTyping={isTyping}
-        loadingStep={loadingStep}
-        messagesEndRef={messagesEndRef}
-        onSend={handleSend}
-        onOptionSelect={handleOptionSelect}
-        onSettingsClick={() => setShowSettings(true)}
-        userMode={userMode}
-        setUserMode={setUserMode}
-        // Add voice recording props
-        isRecording={isRecording}
-        recordingTime={recordingTime}
-        formatRecordingTime={formatRecordingTime}
-        onVoiceToggle={handleVoiceToggle}
-        // Add session props
-        session={session}
-        onNewSession={handleNewSession}
+  // Mobile sidebar overlay
+  const MobileSidebarOverlay = () => (
+    showMobileSidebar && (
+      <div 
+        className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+        onClick={closeMobileSidebar}
       />
-      
-      {renderRightPanel()}
+    )
+  );
+
+  return (
+    <div className="flex flex-col lg:flex-row h-screen bg-gray-50 dark:bg-gray-900 font-sans text-gray-800 dark:text-gray-100 overflow-hidden">
+      {/* Mobile Header */}
+      <div className="lg:hidden flex items-center justify-between p-4 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+        <button
+          onClick={toggleMobileSidebar}
+          className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        <h1 className="text-lg font-semibold">Company Analyzer</h1>
+        <button
+          onClick={() => setShowSettings(true)}
+          className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Mobile Sidebar Overlay */}
+      <MobileSidebarOverlay />
+
+      {/* Left Panel - Responsive */}
+      <div className={`
+        fixed lg:static inset-y-0 left-0 z-40 w-80 lg:w-1/3 xl:w-1/4 2xl:w-1/5
+        transform transition-transform duration-300 ease-in-out
+        ${showMobileSidebar ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+        bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700
+        flex flex-col h-full lg:h-screen
+      `}>
+        <LeftPanel
+          apiKey={apiKey}
+          messages={messages}
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+          isTyping={isTyping}
+          loadingStep={loadingStep}
+          messagesEndRef={messagesEndRef}
+          onSend={handleSend}
+          onOptionSelect={handleOptionSelect}
+          onSettingsClick={() => setShowSettings(true)}
+          userMode={userMode}
+          setUserMode={setUserMode}
+          // Add voice recording props
+          isRecording={isRecording}
+          recordingTime={recordingTime}
+          formatRecordingTime={formatRecordingTime}
+          onVoiceToggle={handleVoiceToggle}
+          // Add session props
+          session={session}
+          onNewSession={handleNewSession}
+          // Add mobile props
+          onMobileClose={closeMobileSidebar}
+          isMobile={true}
+        />
+      </div>
+
+      {/* Right Panel - Responsive */}
+      <div className="flex-1 flex flex-col lg:h-screen overflow-hidden">
+        {renderRightPanel()}
+      </div>
 
       {showSettings && (
         <SimpleSettingsModal onClose={() => setShowSettings(false)} />
