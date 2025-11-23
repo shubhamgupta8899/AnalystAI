@@ -36,7 +36,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 
-const RightPanel = ({ analysis, onReset, onQuickStart, userMode = 'general' }) => {
+const RightPanel = ({ analysis, onReset, onQuickStart, userMode = 'job-seeker' }) => {
   if (!analysis) {
     return (
       <div className="flex flex-1 flex-col min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-purple-50/10 dark:from-gray-900 dark:via-blue-900/10 dark:to-purple-900/5 overflow-hidden">
@@ -511,7 +511,7 @@ const RightPanel = ({ analysis, onReset, onQuickStart, userMode = 'general' }) =
   );
 };
 
-const EnhancedEmptyState = ({ onQuickStart, userMode = 'general' }) => {
+const EnhancedEmptyState = ({ onQuickStart, userMode = 'job-seeker' }) => {
   const quickActions = {
     'general': [
       {

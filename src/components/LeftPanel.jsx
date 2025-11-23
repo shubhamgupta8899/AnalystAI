@@ -481,7 +481,7 @@ const LeftPanel = ({
                 <div className="mt-6">
                   <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Quick Job Searches</h3>
                   <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
-                    {quickPrompts.job-seeker.map((prompt, index) => (
+                    {quickPrompts['job-seeker'].map((prompt, index) => (
                       <button
                         key={index}
                         onClick={() => onOptionSelect(prompt)}
@@ -765,10 +765,15 @@ const LeftPanel = ({
           </div>
           
           {/* Input Helper Text */}
-          
+          <div className="flex items-center justify-between mt-3 px-1">
+            <span className="text-xs text-gray-400 dark:text-gray-500">
+              Press Enter to send • Shift+Enter for new line
+            </span>
+            <span className="text-xs text-gray-400 dark:text-gray-500">
+              {inputValue.length}/500
+            </span>
+          </div>
         </form>
-
-        
       </div>
 
       {/* Click outside to close file menu */}
