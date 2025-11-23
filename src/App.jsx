@@ -8,7 +8,7 @@ import LeftPanel from './components/LeftPanel';
 
 export default function CompanyAnalyzer() {
   // State with hardcoded API key
-  const [apiKey] = useState("AIzaSyBTAQtOhqiFpoUPmMwNTbyX4v0HOekuigI");
+  const [apiKey] = useState(import.meta.env.VITE_GEMINI_API_KEY);
   const [showSettings, setShowSettings] = useState(false);
   const [messages, setMessages] = useState([
     { id: 1, role: 'bot', content: "Hello! I'm your Company Intelligence Agent. Name a company to start research." }

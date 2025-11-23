@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { 
-  Settings, 
-  Bot, 
-  User, 
-  Send, 
-  ChevronRight, 
-  Sparkles, 
-  Zap, 
+
+import {
+  Settings,
+  Bot,
+  User,
+  Send,
+  ChevronRight,
+  Sparkles,
+  Zap,
   Building2,
   MessageSquare,
   Mic,
@@ -26,17 +27,17 @@ import {
 import TypingBubble from './TypingBubble';
 import ChatOptions from './ChatOptions';
 
-const LeftPanel = ({ 
-  apiKey, 
-  messages, 
-  inputValue, 
-  setInputValue, 
-  isTyping, 
-  loadingStep, 
-  messagesEndRef, 
-  onSend, 
-  onOptionSelect, 
-  onSettingsClick 
+const LeftPanel = ({
+  apiKey,
+  messages,
+  inputValue,
+  setInputValue,
+  isTyping,
+  loadingStep,
+  messagesEndRef,
+  onSend,
+  onOptionSelect,
+  onSettingsClick
 }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
@@ -59,13 +60,13 @@ const LeftPanel = ({
   // Voice recording functionality with real transcription
   const startRecording = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ 
+      const stream = await navigator.mediaDevices.getUserMedia({
         audio: {
           sampleRate: 16000,
           channelCount: 1,
           echoCancellation: true,
           noiseSuppression: true
-        } 
+        }
       });
       
       const recorder = new MediaRecorder(stream, {
@@ -241,7 +242,7 @@ const LeftPanel = ({
       "Research the renewable energy sector growth trends"
     ];
 
-    const prompts = userMode === 'job-seeker' ? jobSeekerPrompts : 
+    const prompts = userMode === 'job-seeker' ? jobSeekerPrompts :
                    userMode === 'investor' ? investorPrompts : generalPrompts;
     
     return prompts[Math.floor(Math.random() * prompts.length)];
@@ -544,9 +545,9 @@ const LeftPanel = ({
 
         {/* Chat Messages */}
         {messages.map((msg) => (
-          <EnhancedMessage 
-            key={msg.id} 
-            message={msg} 
+          <EnhancedMessage
+            key={msg.id}
+            message={msg}
             onOptionSelect={onOptionSelect}
           />
         ))}
@@ -624,7 +625,7 @@ const LeftPanel = ({
             )}
           </button>
           
-          <button 
+          <button
             onClick={handleFileClick}
             className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-lg text-xs font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors relative"
           >
@@ -635,7 +636,7 @@ const LeftPanel = ({
             )}
           </button>
 
-          <button 
+          <button
             onClick={() => setShowFileMenu(!showFileMenu)}
             className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-lg text-xs font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
           >
