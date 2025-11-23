@@ -389,7 +389,6 @@ const LeftPanel = ({
                 </span>
               </div>
               <span className="text-gray-300 dark:text-gray-600">•</span>
-              <span className="text-xs text-blue-500 dark:text-blue-400 font-medium">Beta</span>
             </div>
           </div>
         </div>
@@ -410,7 +409,7 @@ const LeftPanel = ({
       {/* User Mode Selector - Job Search First */}
       <div className="px-6 py-4 border-b border-gray-100/50 dark:border-gray-800 bg-white/30 dark:bg-gray-900/30 backdrop-blur-sm">
         <div className="flex items-center gap-3">
-          <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Analysis Mode:</span>
+          
           <div className="flex gap-2">
             {userModes.map((mode) => (
               <button
