@@ -5,20 +5,35 @@ import InvestorPanel from './components/InvestorPanel';
 import SettingsModal from './components/SettingsModal';
 import { MOCK_ANALYSIS } from './data/mockData';
 import LeftPanel from './components/LeftPanel';
-import { transformLLMData } from './utils/transformLLMData'; // Add this import
+import { transformLLMData } from './utils/transformLLMData';
+import { useSession } from './hooks/useSession'; // ADD THIS IMPORT
 
 export default function CompanyAnalyzer() {
+  // ADD SESSION MANAGEMENT HOOK AT THE TOP
+  const { session, updateSession, clearSession } = useSession();
+  
   // State with hardcoded API key
   const [apiKey] = useState(import.meta.env.VITE_GEMINI_API_KEY);
   const [showSettings, setShowSettings] = useState(false);
-  const [messages, setMessages] = useState([
-    { id: 1, role: 'bot', content: "Hello! I'm your Company Intelligence Agent. Name a company to start research." }
-  ]);
+  
+  // MODIFY MESSAGES STATE TO LOAD FROM SESSION
+  const [messages, setMessages] = useState(() => {
+    const savedMessages = localStorage.getItem('companyAnalyzerMessages');
+    return savedMessages ? JSON.parse(savedMessages) : [
+      { id: 1, role: 'bot', content: "Hello! I'm your Company Intelligence Agent. Name a company to start research." }
+    ];
+  });
+  
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [analysis, setAnalysis] = useState(null); 
   const [loadingStep, setLoadingStep] = useState("");
-  const [userMode, setUserMode] = useState('general'); // 'general', 'job-seeker', 'investor'
+  
+  // MODIFY USER MODE TO USE SESSION IF AVAILABLE
+  const [userMode, setUserMode] = useState(() => {
+    const savedSession = localStorage.getItem('companyAnalyzerSession');
+    return savedSession ? JSON.parse(savedSession).userMode : 'general';
+  });
   
   // Voice recording states
   const [isRecording, setIsRecording] = useState(false);
@@ -34,6 +49,40 @@ export default function CompanyAnalyzer() {
 
   const messagesEndRef = useRef(null);
 
+  // ADD SESSION PERSISTENCE EFFECTS
+  useEffect(() => {
+    localStorage.setItem('companyAnalyzerMessages', JSON.stringify(messages));
+    
+    if (session) {
+      updateSession({
+        messageCount: messages.filter(msg => msg.role === 'user').length
+      });
+    }
+  }, [messages, session, updateSession]);
+
+  // UPDATE SESSION WHEN USER MODE CHANGES
+  useEffect(() => {
+    if (session) {
+      updateSession({ userMode });
+    }
+  }, [userMode, session, updateSession]);
+
+  // LOAD ANALYSIS FROM SESSION IF AVAILABLE
+  useEffect(() => {
+    const savedAnalysis = localStorage.getItem('companyAnalyzerAnalysis');
+    if (savedAnalysis) {
+      setAnalysis(JSON.parse(savedAnalysis));
+    }
+  }, []);
+
+  // SAVE ANALYSIS TO SESSION
+  useEffect(() => {
+    if (analysis) {
+      localStorage.setItem('companyAnalyzerAnalysis', JSON.stringify(analysis));
+    }
+  }, [analysis]);
+
+  // REST OF YOUR EXISTING useEffect HOOKS REMAIN THE SAME
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
@@ -100,12 +149,27 @@ export default function CompanyAnalyzer() {
     handleSend(null, optionText);
   };
 
+  // ENHANCE handleQuickStart WITH SESSION TRACKING
   const handleQuickStart = (prompt) => {
+    if (session) {
+      updateSession({
+        usedQuickStart: true,
+        lastQuickStart: prompt
+      });
+    }
     setInputValue(prompt);
     handleSend(null, prompt);
   };
 
   const generateResponse = async (userQuery) => {
+    // TRACK USER QUERIES IN SESSION
+    if (session) {
+      updateSession({
+        lastQuery: userQuery,
+        totalQueries: (session.totalQueries || 0) + 1
+      });
+    }
+
     // 1. Simulation Logic (Client-Side State Machine)
     if (!apiKey) {
       await new Promise(r => setTimeout(r, 800));
@@ -505,6 +569,32 @@ Now, provide your analysis in the specified JSON format:
     ]);
   };
 
+  // ENHANCE RESET FUNCTION TO CLEAR SESSION DATA
+  const handleReset = () => {
+    setAnalysis(null);
+    setConversationState({
+      stage: 'IDLE',
+      company: null,
+      purpose: null
+    });
+    // Optionally clear messages too, or keep conversation history
+    // setMessages([{ id: 1, role: 'bot', content: "Hello! I'm your Company Intelligence Agent. Name a company to start research." }]);
+  };
+
+  // ADD COMPLETE SESSION CLEAR FUNCTION
+  const handleNewSession = () => {
+    clearSession();
+    setMessages([
+      { id: 1, role: 'bot', content: "Hello! I'm your Company Intelligence Agent. Name a company to start research." }
+    ]);
+    setAnalysis(null);
+    setConversationState({
+      stage: 'IDLE',
+      company: null,
+      purpose: null
+    });
+  };
+
   // Function to render the appropriate right panel based on user mode
   const renderRightPanel = () => {
     switch (userMode) {
@@ -512,16 +602,20 @@ Now, provide your analysis in the specified JSON format:
         return (
           <JobSeekerPanel 
             analysis={analysis} 
-            onReset={() => setAnalysis(null)} 
+            onReset={handleReset} 
             onQuickStart={handleQuickStart}
+            session={session}
+            onNewSession={handleNewSession}
           />
         );
       case 'investor':
         return (
           <InvestorPanel 
             analysis={analysis} 
-            onReset={() => setAnalysis(null)} 
+            onReset={handleReset} 
             onQuickStart={handleQuickStart}
+            session={session}
+            onNewSession={handleNewSession}
           />
         );
       case 'general':
@@ -529,15 +623,17 @@ Now, provide your analysis in the specified JSON format:
         return (
           <RightPanel 
             analysis={analysis} 
-            onReset={() => setAnalysis(null)} 
+            onReset={handleReset} 
             onQuickStart={handleQuickStart}
             userMode={userMode}
+            session={session}
+            onNewSession={handleNewSession}
           />
         );
     }
   };
 
-  // Simplified SettingsModal that doesn't show API key input
+  // ENHANCED SettingsModal WITH SESSION INFO
   const SimpleSettingsModal = ({ onClose }) => (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-96">
@@ -551,7 +647,21 @@ Now, provide your analysis in the specified JSON format:
               Using Gemini API for real-time company analysis
             </p>
           </div>
-          <div className="flex justify-end space-x-2">
+          <div>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+              Session: <span className="font-medium">{session?.messageCount || 0} messages</span>
+            </p>
+            <p className="text-xs text-gray-500 dark:text-gray-500">
+              Started: {session ? new Date(session.startTime).toLocaleTimeString() : 'N/A'}
+            </p>
+          </div>
+          <div className="flex justify-between">
+            <button
+              onClick={handleNewSession}
+              className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
+            >
+              New Session
+            </button>
             <button
               onClick={onClose}
               className="px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded hover:bg-gray-400 dark:hover:bg-gray-600"
@@ -584,6 +694,9 @@ Now, provide your analysis in the specified JSON format:
         recordingTime={recordingTime}
         formatRecordingTime={formatRecordingTime}
         onVoiceToggle={handleVoiceToggle}
+        // Add session props
+        session={session}
+        onNewSession={handleNewSession}
       />
       
       {renderRightPanel()}
